@@ -8,7 +8,6 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 public class FemaleGraduatesMapper extends Mapper<LongWritable, Text, Text, DoubleWritable>{
-	// TODO Auto-generated method stub
 
 	public void map(LongWritable key, Text value, Context context)
 			throws IOException, InterruptedException{
@@ -33,18 +32,24 @@ public class FemaleGraduatesMapper extends Mapper<LongWritable, Text, Text, Doub
 			//many countries don't have data for every year, so we'll gather whatever data is available in the
 			//		three most recent years (2016, 2015, and 2014)
 			
-			if(!stats[60].equals("\",")) {
-				context.write(new Text(stats[0] + ", " + stats[2] + " (2016)"), 
+			int latestYear = 2016;
+			double data = 0.0;
+			
+			for(int i = 60; i>3; i--) {
+				try {
+					data = Double.parseDouble(stats[i]);
+				} catch (Exception e) {
+					//don't print any errors, just move on to the the next loop step
+				}
+				latestYear--;
+			}
+			
+			//if data was found, write it to the output...
+			if(data!=0.0) {
+				context.write(new Text(stats[0] + ", " + stats[2] + " ("+latestYear+"): "), 
 						new DoubleWritable(Double.parseDouble(stats[60])));
 			}
-			else if(stats[59].length()>0) {
-				context.write(new Text(stats[0] + ", " + stats[2] + " (2015)"), 
-						new DoubleWritable(Double.parseDouble(stats[60])));
-			}
-			else if(stats[58].length()>0) {
-				context.write(new Text(stats[0] + ", " + stats[2] + " (2014)"), 
-						new DoubleWritable(Double.parseDouble(stats[60])));
-			}
+			//...else, don't add anything to the output
 		}
 	}
 }

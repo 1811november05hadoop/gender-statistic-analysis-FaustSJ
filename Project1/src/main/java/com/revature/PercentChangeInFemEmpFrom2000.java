@@ -2,17 +2,14 @@ package com.revature;
 
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 
-import com.revature.map.AlphabetPartitioner;
-import com.revature.map.WordMapper;
-import com.revature.reduce.MaxReducer;
-import com.revature.reduce.SumReducer;
+import com.revature.map.GlobalFemEmploymentSince2000Mapper;
+import com.revature.reduce.DifferenceReducer;
 
 /*
  * 
@@ -32,31 +29,27 @@ import com.revature.reduce.SumReducer;
 public class PercentChangeInFemEmpFrom2000 extends Configured implements Tool {
 	@Override
 	public int run(String[] args) throws Exception {
-		// TODO Auto-generated method stub
 		//just copy all code from WordCount main()
 
 		if(args.length != 2) {
-			System.err.println("Usage: Wordcount <input dir> <output dir>");
+			System.err.println("Usage: PercentChangeInFemEmpFrom2000 <input dir> <output dir>");
 			return -1;
 		}
 
 		Job job = new Job();
-		job.setJarByClass(WordCount.class);
+		job.setJarByClass(PercentChangeInFemEmpFrom2000.class);
 
-		job.setJobName("Welcome to the MapReduce");
+		job.setJobName("Percent Change in female employment from 2000");
 
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
 
-		job.setMapperClass(WordMapper.class);
-		job.setPartitionerClass(AlphabetPartitioner.class);
-		job.setNumReduceTasks(3);
-		job.setCombinerClass(SumReducer.class);
-		job.setReducerClass(MaxReducer.class);
+		job.setMapperClass(GlobalFemEmploymentSince2000Mapper.class);
+		job.setReducerClass(DifferenceReducer.class);
 
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(IntWritable.class);
+		job.setOutputValueClass(Text.class);
 
 		boolean success = job.waitForCompletion(true);
 		return (success ? 0 : 1);
