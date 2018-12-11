@@ -16,7 +16,7 @@ import com.revature.reduce.YearlyDifferenceReducer;
 /*
  * List the average (yearly) increase in female education in the U.S. from the year 2000
  */
-public class AvgIncreaseInFemEdFrom2000 extends Configured implements Tool {
+public class AvgIncreaseInUSFemEdFrom2000 extends Configured implements Tool {
 
 	@Override
 	public int run(String[] args) throws Exception {
@@ -29,7 +29,7 @@ public class AvgIncreaseInFemEdFrom2000 extends Configured implements Tool {
 		}
 
 		Job job = new Job();
-		job.setJarByClass(AvgIncreaseInFemEdFrom2000.class);
+		job.setJarByClass(AvgIncreaseInUSFemEdFrom2000.class);
 
 		job.setJobName("Average increase in U.S. female education from 2000");
 

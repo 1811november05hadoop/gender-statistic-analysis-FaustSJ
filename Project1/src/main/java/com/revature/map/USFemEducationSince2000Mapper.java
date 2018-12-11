@@ -10,6 +10,9 @@ import org.apache.hadoop.mapreduce.Mapper;
 import com.revature.models.DoubleArrayWritable;
 
 /*
+ * There was no data collected for Educational Attainment, so we'll
+ * 		focus on the data for School Enrollment
+ * 
  * I could've used net or gross values, but I'm using gross values because
  * 		there are no net values for tertiary education enrollment
  * 

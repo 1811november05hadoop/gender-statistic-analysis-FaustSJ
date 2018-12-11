@@ -13,7 +13,7 @@ public class WordCount {
 		
 		//configuration is optional
 		//Configuration without parameters just defaults to normal hadoop configurations
-		int exitCode = ToolRunner.run(new Configuration(), new AvgIncreaseInFemEdFrom2000(), args);
+		int exitCode = ToolRunner.run(new Configuration(), new AvgIncreaseInUSFemEdFrom2000(), args);
 //		int exitCode = ToolRunner.run(new Configuration(), new FemaleGradLessThan30(), args);
 //		int exitCode = ToolRunner.run(new Configuration(), new PercentChangeInFemEmpFrom2000(), args);
 //		int exitCode = ToolRunner.run(new Configuration(), new PercentChangeInMaleEmpFrom2000(), args);
