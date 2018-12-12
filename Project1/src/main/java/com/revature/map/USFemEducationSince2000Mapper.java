@@ -45,6 +45,7 @@ public class USFemEducationSince2000Mapper extends Mapper<LongWritable, Text, Te
 
 		//split the lines through " " spaces
 		String[] stats = line.split("\",\"");
+		stats[0] = stats[0].replace("\"", "");
 		if(stats[0].equals("United States")) {
 
 			//set up an array of Doubles representing the years 2000 through 2016

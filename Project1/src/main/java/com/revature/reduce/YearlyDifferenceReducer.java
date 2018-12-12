@@ -24,9 +24,9 @@ public class YearlyDifferenceReducer extends Reducer<Text, DoubleArrayWritable, 
 			//		so we don't need to worry about interpolating missing inner values.
 			
 			ArrayList<DoubleWritable> differences = new ArrayList<>();
-			
-			//the length of doubleWritables is 17, but we need to access index+1, so we'll cap at index 15.
-			for(int i=0; i<16; i++) {
+
+			//We need to access index+1, so we'll cap at index length-2
+			for(int i=0; i<(doubleWritables.length-2); i++) {
 				double valOne = doubleWritables[i].get();
 				double valTwo = doubleWritables[i+1].get();
 				
@@ -35,8 +35,13 @@ public class YearlyDifferenceReducer extends Reducer<Text, DoubleArrayWritable, 
 				}
 			}
 			
+			DoubleWritable[] diffArr = new DoubleWritable[differences.size()];
+			for(int i = 0; i<differences.size(); i++){
+				diffArr[i] = differences.get(i);
+			}
+			
 			//convert the arraylist to an array of DoubleWritables and output it
-			context.write(key, new DoubleArrayWritable((DoubleWritable[]) differences.toArray()));
+			context.write(key, new DoubleArrayWritable(diffArr));
 		}
 	}
 }

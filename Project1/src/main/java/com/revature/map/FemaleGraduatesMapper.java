@@ -26,18 +26,21 @@ public class FemaleGraduatesMapper extends Mapper<LongWritable, Text, Text, Doub
 
 		//split the lines through " " spaces
 		String[] stats = line.split("\",\"");
-
+		stats[0] = stats[0].replace("\"", "");
 		if(stats[2].equals("School enrollment, tertiary, female (% gross)")) {
 			
 			//many countries don't have data for every year, so we'll gather whatever data is available in the
-			//		three most recent years (2016, 2015, and 2014)
+			//		most recent year
 			
 			int latestYear = 2016;
 			double data = 0.0;
+			boolean dataFound = false;
 			
 			for(int i = 60; i>3; i--) {
 				try {
 					data = Double.parseDouble(stats[i]);
+					dataFound = true;
+					break;
 				} catch (Exception e) {
 					//don't print any errors, just move on to the the next loop step
 				}
@@ -45,9 +48,9 @@ public class FemaleGraduatesMapper extends Mapper<LongWritable, Text, Text, Doub
 			}
 			
 			//if data was found, write it to the output...
-			if(data!=0.0) {
+			if(dataFound) {
 				context.write(new Text(stats[0] + ", " + stats[2] + " ("+latestYear+"): "), 
-						new DoubleWritable(Double.parseDouble(stats[60])));
+						new DoubleWritable(data));
 			}
 			//...else, don't add anything to the output
 		}

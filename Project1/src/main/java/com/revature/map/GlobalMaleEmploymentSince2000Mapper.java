@@ -33,6 +33,7 @@ public class GlobalMaleEmploymentSince2000Mapper extends Mapper<LongWritable, Te
 
 		//split the lines through " " spaces
 		String[] stats = line.split("\",\"");
+		stats[0] = stats[0].replace("\"", "");
 		if(stats[2].equals("Labor force participation rate, male (% of male population ages 15+) (modeled ILO estimate)")) {
 
 			//set up an array of Doubles holding the data for 2000 and the last year of available data
@@ -50,6 +51,7 @@ public class GlobalMaleEmploymentSince2000Mapper extends Mapper<LongWritable, Te
 			for(int i = 60; i>44; i--) {
 				try {
 					dataDouble[1] = Double.parseDouble(stats[i]);
+					break;
 				} catch (Exception e) {
 					//don't report an error, just go to the next loop step
 				}

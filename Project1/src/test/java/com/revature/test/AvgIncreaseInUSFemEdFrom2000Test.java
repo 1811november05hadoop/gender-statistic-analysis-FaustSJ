@@ -71,13 +71,17 @@ public class AvgIncreaseInUSFemEdFrom2000Test {
 	@Test
 	public void testCombiner() {
 		//make the DoubleArrayWritable mock input
-		double[] doub = {93.88283,94.77221,93.0587,95.3905,96.89634,97.06396,95.63982,96.82829,96.10534,96.43099,95.16566,95.25471,95.58667,96.37354,98.47282};
+		double[] doub = {93.88283,94.77221,93.0587,95.3905,96.89634,97.06396,95.63982,96.82829,96.10534,96.43099,95.16566,95.25471,95.58667,96.37354,98.47282, -1.0, -1.0};
 		DoubleWritable[] dw = new DoubleWritable[doub.length];
 		for(int i=0; i<doub.length;i++) {
 			dw[i] = new DoubleWritable(doub[i]);
 		}
-		List<DoubleArrayWritable> values = new ArrayList<>();
+		ArrayList<DoubleArrayWritable> values = new ArrayList<>();
 		values.add(new DoubleArrayWritable(dw));
+
+DoubleArrayWritable daw = values.get(0);
+DoubleWritable[] ddw = daw.get();
+System.out.println(ddw[13]);
 		
 		//mock input
 		combineDriver.withInput(new Text("United States, School enrollment, secondary, female (% gross) (2000 through 2014): "), values);

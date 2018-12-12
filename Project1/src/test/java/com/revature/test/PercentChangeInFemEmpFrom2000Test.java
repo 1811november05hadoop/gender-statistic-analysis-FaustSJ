@@ -68,7 +68,7 @@ public class PercentChangeInFemEmpFrom2000Test {
 		//mock input (in place of Context context
 		reduceDriver.withInput(new Text("United States, Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate), 2000 compared to 2016: "), values);
 		//expected output
-		double dif = y2.get()-y1.get();
+		double dif = (y2.get()-y1.get())*-1;
 		reduceDriver.withOutput(new Text("United States, Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate), 2000 compared to 2016: "), new Text("employment percentage decreased by "+dif));
 
 		reduceDriver.runTest();
@@ -82,7 +82,7 @@ public class PercentChangeInFemEmpFrom2000Test {
 		//reduceDriver's output
 		DoubleWritable y1 = new DoubleWritable(59.060001373291);
 		DoubleWritable y2 = new DoubleWritable(55.8720016479492);
-		double dif = y2.get()-y1.get();
+		double dif = (y2.get()-y1.get())*-1;
 		mapReduceDriver.withOutput(new Text("United States, Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate), 2000 compared to 2016: "), new Text("employment percentage decreased by "+dif));
 
 		//run() can return a list of key,value pairs for manual testing
