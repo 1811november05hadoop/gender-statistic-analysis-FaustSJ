@@ -12,6 +12,10 @@ import com.revature.models.DoubleArrayWritable;
 //Acts as a combiner, making and outputting a list of the differences between yearly values
 public class YearlyDifferenceReducer extends Reducer<Text, DoubleArrayWritable, Text, DoubleArrayWritable>{
 	
+	//fields needed for testing purposes
+	private Text outputKey = new Text();
+	private DoubleArrayWritable outputValue = new DoubleArrayWritable();
+	
 	//reduce(input key, input values list, output)
 	public void reduce(Text key, Iterable<DoubleArrayWritable> values, Context context)
 			throws IOException, InterruptedException {
@@ -31,7 +35,7 @@ public class YearlyDifferenceReducer extends Reducer<Text, DoubleArrayWritable, 
 				double valTwo = doubleWritables[i+1].get();
 				
 				if(valTwo!=-1.0) {
-					differences.add(new DoubleWritable(valTwo-valOne));
+					differences.add(new DoubleWritable((double)Math.round((valTwo-valOne) * 100000d) / 100000d));
 				}
 			}
 			

@@ -1,5 +1,7 @@
 package com.revature.models;
 
+import java.util.Arrays;
+
 import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Writable;
@@ -10,7 +12,7 @@ import org.apache.hadoop.io.Writable;
  */
 
 public class DoubleArrayWritable extends ArrayWritable{
-
+	
 	//for some reason a no-args constructor is needed...?
 	//error in YearlyDifferenceReducer, line 20
 	public DoubleArrayWritable(){
@@ -33,4 +35,50 @@ public class DoubleArrayWritable extends ArrayWritable{
 		//return (DoubleWritable[]) super.get();  ERROR
 		return dw;
 	}
+	
+	//Properly prints the array
+	@Override
+	public String toString(){
+		DoubleWritable[] elems = this.get();
+		StringBuilder toReturn = new StringBuilder("");
+		for(DoubleWritable dw : elems){
+			toReturn.append(" "+dw.toString());
+		}
+		return toReturn.toString();
+	}
+
+	//hashCode() and equals() MUST be overridden in order for the MRUnit tests 
+	//		to properly compare results with objects of this class as output.
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(this.get());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DoubleArrayWritable other = (DoubleArrayWritable) obj;
+		DoubleWritable[] da = other.get();
+		DoubleWritable[] thisda = this.get();
+		//if the arrays don't match in length, return false
+		if(da.length==thisda.length){
+			int index = 0;
+			//If the values don't match, return false
+			for(DoubleWritable dw : thisda){
+				if(dw.get()!=da[index].get()){				
+					return false;
+				}
+				++index;
+			}
+		}
+		return true;
+	}	
 }
