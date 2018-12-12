@@ -27,6 +27,8 @@ public class FemaleGraduatesMapper extends Mapper<LongWritable, Text, Text, Doub
 		//split the lines through " " spaces
 		String[] stats = line.split("\",\"");
 		stats[0] = stats[0].replace("\"", "");
+		stats[stats.length-1] = stats[stats.length-1].replace("\"", "");
+		stats[stats.length-1] = stats[stats.length-1].replace(",", "");
 		if(stats[2].equals("School enrollment, tertiary, female (% gross)")) {
 			
 			//many countries don't have data for every year, so we'll gather whatever data is available in the

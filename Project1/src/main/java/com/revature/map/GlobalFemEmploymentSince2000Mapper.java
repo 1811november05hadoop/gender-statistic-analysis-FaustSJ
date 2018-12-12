@@ -34,6 +34,8 @@ public class GlobalFemEmploymentSince2000Mapper extends Mapper<LongWritable, Tex
 		//split the lines through " " spaces
 		String[] stats = line.split("\",\"");
 		stats[0] = stats[0].replace("\"", "");
+		stats[stats.length-1] = stats[stats.length-1].replace("\"", "");
+		stats[stats.length-1] = stats[stats.length-1].replace(",", "");
 		if(stats[2].equals("Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate)")) {
 
 			//set up an array of Doubles holding the data for 2000 and the last year of available data
@@ -43,17 +45,18 @@ public class GlobalFemEmploymentSince2000Mapper extends Mapper<LongWritable, Tex
 				//store the data for the year 2000
 				dataDouble[0] = Double.parseDouble(stats[44]);
 			} catch (Exception e ) {
-				//if there is no data for the year 2000, don't write it as output
+				//if there is no data for the year 2000, skip this country
 				return;
 			}
 			
+			//44 is the index of 2000, +16 for 2016
 			int latestYear = 2016;
-			for(int i = 60; i>44; i--) {
+			for(int i = (44+16); i>44; i--) {
 				try {
 					dataDouble[1] = Double.parseDouble(stats[i]);
 					break;
 				} catch (Exception e) {
-					//don't report an error, just go to the next loop step
+					//don't report an error, just check the next year prior
 				}
 				latestYear--;
 			}
