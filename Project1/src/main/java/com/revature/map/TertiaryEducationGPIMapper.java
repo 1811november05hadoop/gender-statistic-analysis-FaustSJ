@@ -56,7 +56,7 @@ public class TertiaryEducationGPIMapper extends Mapper<LongWritable, Text, Text,
 			}
 			
 			int furthestYear = 2010;
-			for(int i=54; i>60; i--) {
+			for(int i=54; i<=60; i++) {
 				try {
 					dataDouble[0] = Double.parseDouble(stats[i]);
 					break;

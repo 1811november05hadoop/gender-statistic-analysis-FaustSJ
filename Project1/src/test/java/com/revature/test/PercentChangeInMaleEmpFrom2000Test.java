@@ -12,7 +12,7 @@ import org.apache.hadoop.mrunit.mapreduce.ReduceDriver;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.revature.map.GlobalFemEmploymentSince2000Mapper;
+import com.revature.map.GlobalMaleEmploymentSince2000Mapper;
 import com.revature.models.DoubleArrayWritable;
 import com.revature.reduce.DifferenceReducer;
 

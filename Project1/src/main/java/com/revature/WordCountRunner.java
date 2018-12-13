@@ -9,11 +9,6 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 
-import com.revature.map.AlphabetPartitioner;
-import com.revature.map.WordMapper;
-import com.revature.reduce.MaxReducer;
-import com.revature.reduce.SumReducer;
-
 public class WordCountRunner extends Configured implements Tool{
 
 	@Override
@@ -34,11 +29,11 @@ public class WordCountRunner extends Configured implements Tool{
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
 
-		job.setMapperClass(WordMapper.class);
-		job.setPartitionerClass(AlphabetPartitioner.class);
-		job.setNumReduceTasks(3);
-		job.setCombinerClass(SumReducer.class);
-		job.setReducerClass(MaxReducer.class);
+//		job.setMapperClass(WordMapper.class);
+//		job.setPartitionerClass(AlphabetPartitioner.class);
+//		job.setNumReduceTasks(3);
+//		job.setCombinerClass(SumReducer.class);
+//		job.setReducerClass(MaxReducer.class);
 
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
