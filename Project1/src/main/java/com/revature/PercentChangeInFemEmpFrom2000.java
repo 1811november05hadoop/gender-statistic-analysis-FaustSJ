@@ -9,6 +9,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 
 import com.revature.map.GlobalFemEmploymentSince2000Mapper;
+import com.revature.models.DoubleArrayWritable;
 import com.revature.reduce.DifferenceReducer;
 
 /*
@@ -25,6 +26,10 @@ import com.revature.reduce.DifferenceReducer;
  * final, 
  * combiner: dif in female vs male education percentages
  * reduce: country where difference decreases the most
+ * 
+ * Upper middle income, Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate), 2000 compared to 2016: 	employment percentage decreased by 3.805325602873701
+Uruguay, Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate), 2000 compared to 2016: 	employment percentage increased by 3.5
+Uzbekistan, Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate), 2000 compared to 2016: 	employment percentage increased by 1.4000015258789062
  */
 public class PercentChangeInFemEmpFrom2000 extends Configured implements Tool {
 	@Override
@@ -48,6 +53,8 @@ public class PercentChangeInFemEmpFrom2000 extends Configured implements Tool {
 		job.setMapperClass(GlobalFemEmploymentSince2000Mapper.class);
 		job.setReducerClass(DifferenceReducer.class);
 
+		job.setMapOutputKeyClass(Text.class);
+		job.setMapOutputValueClass(DoubleArrayWritable.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(Text.class);
 

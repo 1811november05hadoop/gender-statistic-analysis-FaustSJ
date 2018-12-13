@@ -18,6 +18,17 @@ import com.revature.reduce.LessThan30Reducer;
  * 	data available.
  * By "graduates" are you referring to the population in Masters and Doctorate programs?
  * 	Or are you referring to the population that graduates from tertiary schools.
+ * 
+ * South Asia (IDA & IBRD), School enrollment, tertiary, female (% gross) (2014): 	19.9473209381104
+South Asia, School enrollment, tertiary, female (% gross) (2014): 	19.9473209381104
+Sri Lanka, School enrollment, tertiary, female (% gross) (2015): 	23.95536
+St. Lucia, School enrollment, tertiary, female (% gross) (2015): 	22.01136
+St. Vincent and the Grenadines, School enrollment, tertiary, female (% gross) (1990): 	8.49879
+Sub-Saharan Africa (IDA & IBRD), School enrollment, tertiary, female (% gross) (2014): 	7.242760181427
+Sub-Saharan Africa (excluding high income), School enrollment, tertiary, female (% gross) (2014): 	7.24258995056152
+Sub-Saharan Africa, School enrollment, tertiary, female (% gross) (2014): 	7.242760181427
+Sudan, School enrollment, tertiary, female (% gross) (2014): 	16.82608
+
  */
 
 public class FemaleGradLessThan30 extends Configured implements Tool {
@@ -42,6 +53,8 @@ public class FemaleGradLessThan30 extends Configured implements Tool {
 		job.setMapperClass(FemaleGraduatesMapper.class);
 		job.setReducerClass(LessThan30Reducer.class);
 
+		job.setMapOutputKeyClass(Text.class);
+		job.setMapOutputValueClass(DoubleWritable.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(DoubleWritable.class);
 

@@ -10,11 +10,17 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 
 import com.revature.map.USFemEducationSince2000Mapper;
+import com.revature.models.DoubleArrayWritable;
 import com.revature.reduce.AverageReducer;
 import com.revature.reduce.YearlyDifferenceReducer;
 
 /*
  * List the average (yearly) increase in female education in the U.S. from the year 2000
+ * 
+ * United States, School enrollment, primary, female (% gross) (2000 through 2015): 	-0.11881000000000003
+United States, School enrollment, secondary, female (% gross) (2000 through 2014): 	0.3278564285714286
+United States, School enrollment, tertiary, female (% gross) (2000 through 2015): 	1.4117020000000002
+
  */
 public class AvgIncreaseInUSFemEdFrom2000 extends Configured implements Tool {
 
@@ -41,6 +47,8 @@ public class AvgIncreaseInUSFemEdFrom2000 extends Configured implements Tool {
 		job.setCombinerClass(YearlyDifferenceReducer.class);
 		job.setReducerClass(AverageReducer.class);
 
+		job.setMapOutputKeyClass(Text.class);
+		job.setMapOutputValueClass(DoubleArrayWritable.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(DoubleWritable.class);
 

@@ -9,6 +9,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 
 import com.revature.map.TertiaryEducationGPIMapper;
+import com.revature.models.DoubleArrayWritable;
 import com.revature.reduce.GPIDifferenceReducer;
 
 //This job looks at tertiary enrollment rates for men versus women using the Gender Parity Index.
@@ -21,6 +22,12 @@ import com.revature.reduce.GPIDifferenceReducer;
 //Finding countries whose GPI has risen within the the five most recent years might have "special programs
 //		aimed at women" that positively impact womens' involvement in higher education.
 
+/*
+ * Angola, School enrollment, tertiary (gross), gender parity index (GPI), from 2011 to 2013: 	The GPI increased by 0.43093000000000004 from originally 0.37032
+Azerbaijan, School enrollment, tertiary (gross), gender parity index (GPI), from 2010 to 2015: 	The GPI increased by 0.17296999999999996 from originally 0.98937
+Bangladesh, School enrollment, tertiary (gross), gender parity index (GPI), from 2011 to 2014: 	The GPI increased by 0.044439999999999924 from originally 0.69337
+
+ */
 public class GenderParityIndexIncreasedInFiveYears extends Configured implements Tool {
 	@Override
 	public int run(String[] args) throws Exception {
@@ -43,6 +50,8 @@ public class GenderParityIndexIncreasedInFiveYears extends Configured implements
 		job.setMapperClass(TertiaryEducationGPIMapper.class);
 		job.setReducerClass(GPIDifferenceReducer.class);
 
+		job.setMapOutputKeyClass(Text.class);
+		job.setMapOutputValueClass(DoubleArrayWritable.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(Text.class);
 
