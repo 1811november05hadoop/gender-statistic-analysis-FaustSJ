@@ -69,7 +69,7 @@ public class USFemEducationSince2000Mapper extends Mapper<LongWritable, Text, Te
 					}
 				}
 				
-				outputKey = "United States, Average annual change in primary education\nenrollment for females,";
+				outputKey = "United States, Average annual change in primary education\n\tenrollment for females,";
 				writeToContext = true;
 			}
 			else if(stats[2].equals("School enrollment, secondary, female (% gross)")) {
@@ -83,7 +83,7 @@ public class USFemEducationSince2000Mapper extends Mapper<LongWritable, Text, Te
 						data[i-44] = new DoubleWritable(-1.0);
 					}
 				}
-				outputKey = "United States, Average annual change in secondary education\nenrollment for females,";
+				outputKey = "United States, Average annual change in secondary education\n\tenrollment for females,";
 				writeToContext = true;
 			}
 			else if(stats[2].equals("School enrollment, tertiary, female (% gross)")) {
@@ -97,7 +97,7 @@ public class USFemEducationSince2000Mapper extends Mapper<LongWritable, Text, Te
 						data[i-44] = new DoubleWritable(-1.0);
 					}
 				}
-				outputKey = "United States, Average annual change in tertiary education\nenrollment for females,";
+				outputKey = "United States, Average annual change in tertiary education\n\tenrollment for females,";
 				writeToContext = true;
 			}
 			

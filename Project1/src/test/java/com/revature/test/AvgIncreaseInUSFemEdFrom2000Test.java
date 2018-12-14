@@ -66,7 +66,7 @@ public class AvgIncreaseInUSFemEdFrom2000Test {
 		for(int i=0; i<doub.length;i++) {
 			dw[i] = new DoubleWritable(doub[i]);
 		}
-		mapDriver.withOutput(new Text("United States, Average annual change in secondary education\nenrollment for females, (2000 through 2014): "), new DoubleArrayWritable(dw));
+		mapDriver.withOutput(new Text("United States, Average annual change in secondary education\n\tenrollment for females, (2000 through 2014): "), new DoubleArrayWritable(dw));
 		//run the test
 		mapDriver.runTest();
 	}
@@ -83,7 +83,7 @@ public class AvgIncreaseInUSFemEdFrom2000Test {
 		values.add(new DoubleArrayWritable(dw));
 		
 		//mock input
-		combineDriver.withInput(new Text("United States, Average annual change in secondary education\nenrollment for females, (2000 through 2014): "), values);
+		combineDriver.withInput(new Text("United States, Average annual change in secondary education\n\tenrollment for females, (2000 through 2014): "), values);
 
 		
 		//make the DoubleArrayWritable mock output
@@ -93,7 +93,7 @@ public class AvgIncreaseInUSFemEdFrom2000Test {
 			dwoutput[i] = new DoubleWritable(dif[i]);
 		}
 		//expected output
-		combineDriver.withOutput(new Text("United States, Average annual change in secondary education\nenrollment for females, (2000 through 2014): "), new DoubleArrayWritable(dwoutput));
+		combineDriver.withOutput(new Text("United States, Average annual change in secondary education\n\tenrollment for females, (2000 through 2014): "), new DoubleArrayWritable(dwoutput));
 		
 		combineDriver.runTest();
 	}
@@ -109,9 +109,9 @@ public class AvgIncreaseInUSFemEdFrom2000Test {
 		values.add(new DoubleArrayWritable(dwoutput));
 
 		//mock input
-		reduceDriver.withInput(new Text("United States, School enrollment, secondary, female (% gross) (2000 through 2014): "), values);
+		reduceDriver.withInput(new Text("United States, Average annual change in secondary education\n\tenrollment for females, (2000 through 2014): "), values);
 		//expected output
-		reduceDriver.withOutput(new Text("United States, School enrollment, secondary, female (% gross) (2000 through 2014): "), new DoubleWritable((double)Math.round((4.58999/14.0) * 100000d) / 100000d));
+		reduceDriver.withOutput(new Text("United States, Average annual change in secondary education\n\tenrollment for females, (2000 through 2014): "), new DoubleWritable((double)Math.round((4.58999/14.0) * 100000d) / 100000d));
 
 		reduceDriver.runTest();
 	}
@@ -122,7 +122,7 @@ public class AvgIncreaseInUSFemEdFrom2000Test {
 		mapReduceDriver.withInput(new LongWritable(1), new Text("\"United States\",\"USA\",\"School enrollment, secondary, female (% gross)\",\"SE.SEC.ENRR.FE\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"60.67222\",\"\",\"\",\"\",\"\",\"\",\"85.3929\",\"\",\"\",\"91.41668\",\"94.67477\",\"94.75381\",\"96.46224\",\"95.0773\",\"96.60813\",\"96.64305\",\"\",\"\",\"91.47174\",\"92.25663\",\"\",\"95.98984\",\"96.81125\",\"96.40682\",\"95.25981\",\"\",\"96.92163\",\"\",\"93.88283\",\"94.77221\",\"93.0587\",\"95.3905\",\"96.89634\",\"97.06396\",\"95.63982\",\"96.82829\",\"96.10534\",\"96.43099\",\"95.16566\",\"95.25471\",\"95.58667\",\"96.37354\",\"98.47282\",\"\",\"\",\r\n"));
 
 		//reduceDriver's output
-		mapReduceDriver.withOutput(new Text("United States, School enrollment, secondary, female (% gross) (2000 through 2014): "), new DoubleWritable(4.58999/14.0));
+		mapReduceDriver.withOutput(new Text("United States, Average annual change in secondary education\n\tenrollment for females, (2000 through 2014): "), new DoubleWritable((double)Math.round((4.58999/14.0) * 100000d) / 100000d));
 
 		//run() can return a list of key,value pairs for manual testing
 		mapReduceDriver.runTest();

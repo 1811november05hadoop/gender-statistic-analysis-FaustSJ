@@ -66,7 +66,7 @@ public class GlobalMaleEmploymentSince2000Mapper extends Mapper<LongWritable, Te
 				DoubleWritable[] dataDoubleWriter = new DoubleWritable[2];
 				dataDoubleWriter[0] = new DoubleWritable(dataDouble[0]);
 				dataDoubleWriter[1] = new DoubleWritable(dataDouble[1]);
-				context.write(new Text(stats[0] + ", " + stats[2] + ", change in the % of males employed,\n\t2000 compared to "+latestYear+": "), new DoubleArrayWritable(dataDoubleWriter));
+				context.write(new Text(stats[0] + ", change in the % of males employed,\n\t2000 compared to "+latestYear+": "), new DoubleArrayWritable(dataDoubleWriter));
 			}
 			//...else, just don't output it to the reducer
 		}
