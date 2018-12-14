@@ -75,7 +75,7 @@ public class TertiaryEducationGPIMapper extends Mapper<LongWritable, Text, Text,
 			DoubleWritable[] dataDoubleWriter = new DoubleWritable[2];
 			dataDoubleWriter[0] = new DoubleWritable(dataDouble[0]);
 			dataDoubleWriter[1] = new DoubleWritable(dataDouble[1]);
-			context.write(new Text(stats[0] + ", " + stats[2] + ", from "+furthestYear+" to "+latestYear+": "), new DoubleArrayWritable(dataDoubleWriter));
+			context.write(new Text(stats[0] + ", tertiary school enrollment\nGPI increase from "+furthestYear+" to "+latestYear+": "), new DoubleArrayWritable(dataDoubleWriter));
 		}
 	}
 }

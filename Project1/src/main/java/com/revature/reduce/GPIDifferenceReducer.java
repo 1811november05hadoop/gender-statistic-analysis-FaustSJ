@@ -8,7 +8,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import com.revature.models.DoubleArrayWritable;
 
-public class GPIDifferenceReducer extends Reducer<Text, DoubleArrayWritable, Text, Text>{
+public class GPIDifferenceReducer extends Reducer<Text, DoubleArrayWritable, Text, DoubleWritable>{
 	
 	//reduce(input key, input values list, output)
 	public void reduce(Text key, Iterable<DoubleArrayWritable> values, Context context)
@@ -19,7 +19,7 @@ public class GPIDifferenceReducer extends Reducer<Text, DoubleArrayWritable, Tex
 			DoubleWritable[] vals = doubleArray.get();
 			
 			double difference = vals[1].get()-vals[0].get();
-			context.write(key, new Text("The GPI increased by "+difference+" from originally "+vals[0]));
+			context.write(key, new DoubleWritable((double)Math.round((difference) * 100000d) / 100000d));
 		}
 	}
 }

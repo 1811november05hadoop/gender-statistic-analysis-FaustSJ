@@ -51,7 +51,7 @@ public class FemaleGraduatesMapper extends Mapper<LongWritable, Text, Text, Doub
 			
 			//if data was found, write it to the output...
 			if(dataFound) {
-				context.write(new Text(stats[0] + ", " + stats[2] + " ("+latestYear+"): "), 
+				context.write(new Text(stats[0] + "\n\t female tertiary school enrollment for "+latestYear+" (% gross): "), 
 						new DoubleWritable(data));
 			}
 			//...else, don't add anything to the output

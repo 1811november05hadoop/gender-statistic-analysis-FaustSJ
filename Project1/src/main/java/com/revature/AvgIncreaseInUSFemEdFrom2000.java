@@ -14,20 +14,18 @@ import com.revature.models.DoubleArrayWritable;
 import com.revature.reduce.AverageReducer;
 import com.revature.reduce.YearlyDifferenceReducer;
 
-/*
- * List the average (yearly) increase in female education in the U.S. from the year 2000
+/**
+ * Request: List the average increase in female education in the U.S. from the year 2000
  * 
- * United States, School enrollment, primary, female (% gross) (2000 through 2015): 	-0.11881000000000003
-United States, School enrollment, secondary, female (% gross) (2000 through 2014): 	0.3278564285714286
-United States, School enrollment, tertiary, female (% gross) (2000 through 2015): 	1.4117020000000002
-
+ * This job is to list the average annual increase in female school enrollment for all three
+ * education levels in the U.S. between the year 2000 and the last year of data available.
+ *
  */
+
 public class AvgIncreaseInUSFemEdFrom2000 extends Configured implements Tool {
 
 	@Override
 	public int run(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-		//just copy all code from WordCount main()
 
 		if(args.length != 2) {
 			System.err.println("Usage: AvgIncreaseInFemEdFrom2000 <input dir> <output dir>");

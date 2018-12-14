@@ -12,23 +12,12 @@ import org.apache.hadoop.util.Tool;
 import com.revature.map.FemaleGraduatesMapper;
 import com.revature.reduce.LessThan30Reducer;
 
-/*
- *  * Identify the countries where % of female graduates is less than 30%
- * Do you have a particular year in mind? I could do 2016, but 2014 has the most
- * 	data available.
- * By "graduates" are you referring to the population in Masters and Doctorate programs?
- * 	Or are you referring to the population that graduates from tertiary schools.
+/**
+ * Request: Identify the countries where % of female graduates is less than 30%
  * 
- * South Asia (IDA & IBRD), School enrollment, tertiary, female (% gross) (2014): 	19.9473209381104
-South Asia, School enrollment, tertiary, female (% gross) (2014): 	19.9473209381104
-Sri Lanka, School enrollment, tertiary, female (% gross) (2015): 	23.95536
-St. Lucia, School enrollment, tertiary, female (% gross) (2015): 	22.01136
-St. Vincent and the Grenadines, School enrollment, tertiary, female (% gross) (1990): 	8.49879
-Sub-Saharan Africa (IDA & IBRD), School enrollment, tertiary, female (% gross) (2014): 	7.242760181427
-Sub-Saharan Africa (excluding high income), School enrollment, tertiary, female (% gross) (2014): 	7.24258995056152
-Sub-Saharan Africa, School enrollment, tertiary, female (% gross) (2014): 	7.242760181427
-Sudan, School enrollment, tertiary, female (% gross) (2014): 	16.82608
-
+ * This job is to list countries (or regions) where females in tertiary education
+ * is less than 30%
+ *
  */
 
 public class FemaleGradLessThan30 extends Configured implements Tool {

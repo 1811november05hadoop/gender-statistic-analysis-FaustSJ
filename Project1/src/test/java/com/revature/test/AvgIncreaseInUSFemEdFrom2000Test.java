@@ -66,7 +66,7 @@ public class AvgIncreaseInUSFemEdFrom2000Test {
 		for(int i=0; i<doub.length;i++) {
 			dw[i] = new DoubleWritable(doub[i]);
 		}
-		mapDriver.withOutput(new Text("United States, School enrollment, secondary, female (% gross) (2000 through 2014): "), new DoubleArrayWritable(dw));
+		mapDriver.withOutput(new Text("United States, Average annual change in secondary education\nenrollment for females, (2000 through 2014): "), new DoubleArrayWritable(dw));
 		//run the test
 		mapDriver.runTest();
 	}
@@ -83,7 +83,7 @@ public class AvgIncreaseInUSFemEdFrom2000Test {
 		values.add(new DoubleArrayWritable(dw));
 		
 		//mock input
-		combineDriver.withInput(new Text("United States, School enrollment, secondary, female (% gross) (2000 through 2014): "), values);
+		combineDriver.withInput(new Text("United States, Average annual change in secondary education\nenrollment for females, (2000 through 2014): "), values);
 
 		
 		//make the DoubleArrayWritable mock output
@@ -93,7 +93,7 @@ public class AvgIncreaseInUSFemEdFrom2000Test {
 			dwoutput[i] = new DoubleWritable(dif[i]);
 		}
 		//expected output
-		combineDriver.withOutput(new Text("United States, School enrollment, secondary, female (% gross) (2000 through 2014): "), new DoubleArrayWritable(dwoutput));
+		combineDriver.withOutput(new Text("United States, Average annual change in secondary education\nenrollment for females, (2000 through 2014): "), new DoubleArrayWritable(dwoutput));
 		
 		combineDriver.runTest();
 	}
@@ -111,7 +111,7 @@ public class AvgIncreaseInUSFemEdFrom2000Test {
 		//mock input
 		reduceDriver.withInput(new Text("United States, School enrollment, secondary, female (% gross) (2000 through 2014): "), values);
 		//expected output
-		reduceDriver.withOutput(new Text("United States, School enrollment, secondary, female (% gross) (2000 through 2014): "), new DoubleWritable(4.58999/14.0));
+		reduceDriver.withOutput(new Text("United States, School enrollment, secondary, female (% gross) (2000 through 2014): "), new DoubleWritable((double)Math.round((4.58999/14.0) * 100000d) / 100000d));
 
 		reduceDriver.runTest();
 	}

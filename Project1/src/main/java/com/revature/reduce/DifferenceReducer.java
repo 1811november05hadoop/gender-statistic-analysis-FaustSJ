@@ -21,7 +21,7 @@ public class DifferenceReducer extends Reducer<Text, DoubleArrayWritable, Text, 
 		for(DoubleArrayWritable doubleArray: values){
 			DoubleWritable[] vals = doubleArray.get();
 			
-			double difference = vals[1].get()-vals[0].get();
+			double difference = (double)Math.round((vals[1].get()-vals[0].get()) * 100000d) / 100000d;
 			
 			//format the output to describe the change
 			if(difference>0) {

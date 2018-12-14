@@ -16,7 +16,7 @@ public class LessThan30Reducer extends Reducer<Text, DoubleWritable, Text, Doubl
 		for(DoubleWritable value: values){
 			//if the value is less than 30, write it to output.
 			if(value.get() < 30.0) {
-				context.write(key, value);
+				context.write(key, new DoubleWritable((double)Math.round((value.get()) * 100000d) / 100000d));
 				//no need to check for more values or print anymore, just return
 				return;
 			}

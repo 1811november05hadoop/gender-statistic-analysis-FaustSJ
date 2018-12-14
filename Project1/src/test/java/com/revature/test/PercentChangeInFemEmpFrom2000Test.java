@@ -46,12 +46,12 @@ public class PercentChangeInFemEmpFrom2000Test {
 	@Test
 	public void testMapper() {
 		//giving it a psudo-file line
-		mapDriver.withInput(new LongWritable(1), new Text("\"United States\",\"USA\",\"Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate)\",\"SL.TLF.CACT.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"56.3470001220703\",\"56.1430015563965\",\"56.5509986877441\",\"56.6609992980957\",\"57.6339988708496\",\"57.8400001525879\",\"58.1749992370605\",\"58.7039985656738\",\"58.8279991149902\",\"58.9930000305176\",\"59.060001373291\",\"58.8349990844727\",\"58.6059989929199\",\"58.4830017089844\",\"58.1829986572266\",\"58.2859992980957\",\"58.4059982299805\",\"58.3489990234375\",\"58.5530014038086\",\"58.2350006103516\",\"57.5820007324219\",\"56.9729995727539\",\"56.7490005493164\",\"56.3209991455078\",\"56.1209983825684\",\"56.007999420166\",\"55.8720016479492\",\r\n"));
+		mapDriver.withInput(new LongWritable(1), new Text("\"United States\",\"USA\",\"Employment to population ratio, 15+, female (%) (modeled ILO estimate)\",\"SL.EMP.TOTL.SP.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"52.5610008239746\",\"52.5690002441406\",\"52.9469985961914\",\"54.1669998168945\",\"54.6139984130859\",\"55.0340003967285\",\"55.7900009155273\",\"56.1259994506836\",\"56.4620018005371\",\"56.6199989318848\",\"56.1189994812012\",\"55.2980003356934\",\"55.1599998474121\",\"55.0439987182617\",\"55.3009986877441\",\"55.7270011901855\",\"55.7519989013672\",\"55.3969993591309\",\"53.5410003662109\",\"52.6469993591309\",\"52.1679992675781\",\"52.2569999694824\",\"52.3470001220703\",\"52.693000793457\",\"53.1230010986328\",\"53.2099990844727\",\r\n"));
 		//expected output
-		DoubleWritable y1 = new DoubleWritable(59.060001373291);
-		DoubleWritable y2 = new DoubleWritable(55.8720016479492);
+		DoubleWritable y1 = new DoubleWritable(56.6199989318848);
+		DoubleWritable y2 = new DoubleWritable(53.2099990844727);
 		DoubleWritable[] dw = {y1, y2};
-		mapDriver.withOutput(new Text("United States, Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate), 2000 compared to 2016: "), new DoubleArrayWritable(dw));
+		mapDriver.withOutput(new Text("United States, change in the % of females employed,\n\t2000 compared to 2016: "), new DoubleArrayWritable(dw));
 		//run the test
 		mapDriver.runTest();
 	}
@@ -59,17 +59,17 @@ public class PercentChangeInFemEmpFrom2000Test {
 	@Test
 	public void testReducer() {
 		//making the mock input
-		DoubleWritable y1 = new DoubleWritable(59.060001373291);
-		DoubleWritable y2 = new DoubleWritable(55.8720016479492);
+		DoubleWritable y1 = new DoubleWritable(56.6199989318848);
+		DoubleWritable y2 = new DoubleWritable(53.2099990844727);
 		DoubleWritable[] dw = {y1, y2};
 		List<DoubleArrayWritable> values = new ArrayList<>();
 		values.add(new DoubleArrayWritable(dw));
 
 		//mock input (in place of Context context
-		reduceDriver.withInput(new Text("United States, Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate), 2000 compared to 2016: "), values);
+		reduceDriver.withInput(new Text("United States, change in the % of females employed,\n\t2000 compared to 2016: "), values);
 		//expected output
-		double dif = (y2.get()-y1.get())*-1;
-		reduceDriver.withOutput(new Text("United States, Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate), 2000 compared to 2016: "), new Text("employment percentage decreased by "+dif));
+		double dif = (double)Math.round(((y2.get()-y1.get())*-1) * 100000d) / 100000d;
+		reduceDriver.withOutput(new Text("United States, change in the % of females employed,\n\t2000 compared to 2016: "), new Text("employment percentage decreased by "+dif));
 
 		reduceDriver.runTest();
 	}
@@ -77,13 +77,13 @@ public class PercentChangeInFemEmpFrom2000Test {
 	@Test
 	public void testMapReduce() {
 		//mapDriver's input
-		mapReduceDriver.withInput(new LongWritable(1), new Text("\"United States\",\"USA\",\"Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate)\",\"SL.TLF.CACT.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"56.3470001220703\",\"56.1430015563965\",\"56.5509986877441\",\"56.6609992980957\",\"57.6339988708496\",\"57.8400001525879\",\"58.1749992370605\",\"58.7039985656738\",\"58.8279991149902\",\"58.9930000305176\",\"59.060001373291\",\"58.8349990844727\",\"58.6059989929199\",\"58.4830017089844\",\"58.1829986572266\",\"58.2859992980957\",\"58.4059982299805\",\"58.3489990234375\",\"58.5530014038086\",\"58.2350006103516\",\"57.5820007324219\",\"56.9729995727539\",\"56.7490005493164\",\"56.3209991455078\",\"56.1209983825684\",\"56.007999420166\",\"55.8720016479492\",\r\n"));
+		mapReduceDriver.withInput(new LongWritable(1), new Text("\"United States\",\"USA\",\"Employment to population ratio, 15+, female (%) (modeled ILO estimate)\",\"SL.EMP.TOTL.SP.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"52.5610008239746\",\"52.5690002441406\",\"52.9469985961914\",\"54.1669998168945\",\"54.6139984130859\",\"55.0340003967285\",\"55.7900009155273\",\"56.1259994506836\",\"56.4620018005371\",\"56.6199989318848\",\"56.1189994812012\",\"55.2980003356934\",\"55.1599998474121\",\"55.0439987182617\",\"55.3009986877441\",\"55.7270011901855\",\"55.7519989013672\",\"55.3969993591309\",\"53.5410003662109\",\"52.6469993591309\",\"52.1679992675781\",\"52.2569999694824\",\"52.3470001220703\",\"52.693000793457\",\"53.1230010986328\",\"53.2099990844727\",\r\n"));
 
 		//reduceDriver's output
-		DoubleWritable y1 = new DoubleWritable(59.060001373291);
-		DoubleWritable y2 = new DoubleWritable(55.8720016479492);
-		double dif = (y2.get()-y1.get())*-1;
-		mapReduceDriver.withOutput(new Text("United States, Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate), 2000 compared to 2016: "), new Text("employment percentage decreased by "+dif));
+		DoubleWritable y1 = new DoubleWritable(56.6199989318848);
+		DoubleWritable y2 = new DoubleWritable(53.2099990844727);
+		double dif = (double)Math.round(((y2.get()-y1.get())*-1) * 100000d) / 100000d;
+		mapReduceDriver.withOutput(new Text("United States, change in the % of females employed,\n\t2000 compared to 2016: "), new Text("employment percentage decreased by "+dif));
 
 		//run() can return a list of key,value pairs for manual testing
 		mapReduceDriver.runTest();

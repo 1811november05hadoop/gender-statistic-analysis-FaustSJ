@@ -2,6 +2,7 @@ package com.revature;
 
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -12,22 +13,19 @@ import com.revature.map.TertiaryEducationGPIMapper;
 import com.revature.models.DoubleArrayWritable;
 import com.revature.reduce.GPIDifferenceReducer;
 
-//This job looks at tertiary enrollment rates for men versus women using the Gender Parity Index.
-//A GPI of less than 1 means men outnumber women, greater than 1 means women outnumber men, 1 means their equal.
-
-//We'll be focusing on countries whose GPI have risen within the five most recent years between 2010 and 2016.
-//We'll also be focusing only on countries whose GPI starts less than 1 for those five years, or, countries
-//		where women are outnumbered in tertiary education.
-
-//Finding countries whose GPI has risen within the the five most recent years might have "special programs
-//		aimed at women" that positively impact womens' involvement in higher education.
-
-/*
- * Angola, School enrollment, tertiary (gross), gender parity index (GPI), from 2011 to 2013: 	The GPI increased by 0.43093000000000004 from originally 0.37032
-Azerbaijan, School enrollment, tertiary (gross), gender parity index (GPI), from 2010 to 2015: 	The GPI increased by 0.17296999999999996 from originally 0.98937
-Bangladesh, School enrollment, tertiary (gross), gender parity index (GPI), from 2011 to 2014: 	The GPI increased by 0.044439999999999924 from originally 0.69337
-
+/**
+ * 
+ * This job looks at tertiary enrollment rates for men versus women using the Gender Parity Index.
+ * A GPI of less than 1 means men outnumber women, greater than 1 means women outnumber men, 1 means their equal.
+ * 
+ * We'll be focusing on countries whose GPI have risen within the five most recent years between 2010 and 2016.
+ * 		where women are outnumbered in tertiary education.
+ * 
+ * Finding countries whose GPI has risen within the the five most recent years might have "special programs
+ *		aimed at women" that positively impact womens' involvement in higher education.
+ *
  */
+
 public class GenderParityIndexIncreasedInFiveYears extends Configured implements Tool {
 	@Override
 	public int run(String[] args) throws Exception {
@@ -53,7 +51,7 @@ public class GenderParityIndexIncreasedInFiveYears extends Configured implements
 		job.setMapOutputKeyClass(Text.class);
 		job.setMapOutputValueClass(DoubleArrayWritable.class);
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(Text.class);
+		job.setOutputValueClass(DoubleWritable.class);
 
 		boolean success = job.waitForCompletion(true);
 		return (success ? 0 : 1);

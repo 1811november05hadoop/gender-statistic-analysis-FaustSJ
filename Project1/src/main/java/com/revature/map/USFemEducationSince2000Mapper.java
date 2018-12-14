@@ -43,13 +43,15 @@ public class USFemEducationSince2000Mapper extends Mapper<LongWritable, Text, Te
 		 *  60 - 2016 (if length = 62)
 		 */
 
-		//split the lines through " " spaces
+		//split the lines through commas quotes, and clean up the first and last values
 		String[] stats = line.split("\",\"");
 		stats[0] = stats[0].replace("\"", "");
 		stats[stats.length-1] = stats[stats.length-1].replace("\"", "");
 		stats[stats.length-1] = stats[stats.length-1].replace(",", "");
 		if(stats[0].equals("United States")) {
 
+			String outputKey = "";
+			
 			//set up an array of Doubles representing the years 2000 through 2016
 			DoubleWritable[] data = new DoubleWritable[17];
 			//to add years to the key text, it needs to be calculated in a separate block,
@@ -67,6 +69,7 @@ public class USFemEducationSince2000Mapper extends Mapper<LongWritable, Text, Te
 					}
 				}
 				
+				outputKey = "United States, Average annual change in primary education\nenrollment for females,";
 				writeToContext = true;
 			}
 			else if(stats[2].equals("School enrollment, secondary, female (% gross)")) {
@@ -80,6 +83,7 @@ public class USFemEducationSince2000Mapper extends Mapper<LongWritable, Text, Te
 						data[i-44] = new DoubleWritable(-1.0);
 					}
 				}
+				outputKey = "United States, Average annual change in secondary education\nenrollment for females,";
 				writeToContext = true;
 			}
 			else if(stats[2].equals("School enrollment, tertiary, female (% gross)")) {
@@ -93,7 +97,7 @@ public class USFemEducationSince2000Mapper extends Mapper<LongWritable, Text, Te
 						data[i-44] = new DoubleWritable(-1.0);
 					}
 				}
-				
+				outputKey = "United States, Average annual change in tertiary education\nenrollment for females,";
 				writeToContext = true;
 			}
 			
@@ -118,7 +122,7 @@ public class USFemEducationSince2000Mapper extends Mapper<LongWritable, Text, Te
 				}
 				//if the first year and the last year aren't the same year, write to output
 				if(lastYear!=firstYear) {
-					context.write(new Text(stats[0] + ", " + stats[2] + " ("+firstYear+" through "+lastYear+"): "), new DoubleArrayWritable(data));
+					context.write(new Text(outputKey + " ("+firstYear+" through "+lastYear+"): "), new DoubleArrayWritable(data));
 				}
 			}
 		}

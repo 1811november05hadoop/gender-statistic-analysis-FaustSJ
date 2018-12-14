@@ -12,25 +12,14 @@ import com.revature.map.GlobalFemEmploymentSince2000Mapper;
 import com.revature.models.DoubleArrayWritable;
 import com.revature.reduce.DifferenceReducer;
 
-/*
+/**
+ * Request: List the % of change in female employment from the year 2000
  * 
- * 
- *  * List the % of change in male employment from the year 2000
- * List the % of change in female employment from the year 2000
- * Do you have a specific country in mind? list of countries?
- *	There is a World estimate if you would want that.
- * 
- * 28716 
- * 28718
- * 
- * final, 
- * combiner: dif in female vs male education percentages
- * reduce: country where difference decreases the most
- * 
- * Upper middle income, Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate), 2000 compared to 2016: 	employment percentage decreased by 3.805325602873701
-Uruguay, Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate), 2000 compared to 2016: 	employment percentage increased by 3.5
-Uzbekistan, Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate), 2000 compared to 2016: 	employment percentage increased by 1.4000015258789062
+ * This job is to list how the % of females employed changed from 2000
+ * 		to the most recent year available, for every country (or region)
+ *
  */
+
 public class PercentChangeInFemEmpFrom2000 extends Configured implements Tool {
 	@Override
 	public int run(String[] args) throws Exception {

@@ -25,7 +25,7 @@ public class AverageReducer extends Reducer<Text, DoubleArrayWritable, Text, Dou
 			}
 			
 			//calculate and write the average to the output
-			context.write(key, new DoubleWritable(sum / ((double)doubleWritables.length)));
+			context.write(key, new DoubleWritable((double)Math.round((sum / ((double)doubleWritables.length)) * 100000d) / 100000d));
 		}
 	}
 }

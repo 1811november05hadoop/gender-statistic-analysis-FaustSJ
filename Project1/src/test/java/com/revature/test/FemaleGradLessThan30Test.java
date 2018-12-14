@@ -47,7 +47,7 @@ public class FemaleGradLessThan30Test {
 		//giving it a psudo-file line
 		mapDriver.withInput(new LongWritable(1), new Text("\"Bhutan\",\"BTN\",\"School enrollment, tertiary, female (% gross)\",\"SE.TER.ENRR.FE\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.19124\",\"0.42282\",\"0.39417\",\"\",\"\",\"0.25595\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"2.01428\",\"\",\"\",\"\",\"\",\"\",\"3.72243\",\"3.70851\",\"3.82923\",\"4.70295\",\"4.73191\",\"5.28042\",\"7.08169\",\"7.67794\",\"9.23651\",\"\",\"\",\"\","));
 		//expected output
-		mapDriver.withOutput(new Text("Bhutan, School enrollment, tertiary, female (% gross) (2013): "), new DoubleWritable(9.23651));
+		mapDriver.withOutput(new Text("Bhutan\n\t female tertiary school enrollment for 2013 (% gross): "), new DoubleWritable(9.23651));
 		//run the test
 		mapDriver.runTest();
 	}
@@ -58,9 +58,9 @@ public class FemaleGradLessThan30Test {
 		values.add(new DoubleWritable(9.23651));
 		
 		//mock input (in place of Context context
-		reduceDriver.withInput(new Text("Bhutan, School enrollment, tertiary, female (% gross) (2013): "), values);
+		reduceDriver.withInput(new Text("Bhutan\n\t female tertiary school enrollment for 2013 (% gross): "), values);
 		//expected output
-		reduceDriver.withOutput(new Text("Bhutan, School enrollment, tertiary, female (% gross) (2013): "), new DoubleWritable(9.23651));
+		reduceDriver.withOutput(new Text("Bhutan\n\t female tertiary school enrollment for 2013 (% gross): "), new DoubleWritable(9.23651));
 		
 		reduceDriver.runTest();
 	}
@@ -71,7 +71,7 @@ public class FemaleGradLessThan30Test {
 		mapReduceDriver.withInput(new LongWritable(1), new Text("\"Bhutan\",\"BTN\",\"School enrollment, tertiary, female (% gross)\",\"SE.TER.ENRR.FE\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.19124\",\"0.42282\",\"0.39417\",\"\",\"\",\"0.25595\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"2.01428\",\"\",\"\",\"\",\"\",\"\",\"3.72243\",\"3.70851\",\"3.82923\",\"4.70295\",\"4.73191\",\"5.28042\",\"7.08169\",\"7.67794\",\"9.23651\",\"\",\"\",\"\","));
 		
 		//reduceDriver's output
-		mapReduceDriver.withOutput(new Text("Bhutan, School enrollment, tertiary, female (% gross) (2013): "), new DoubleWritable(9.23651));
+		mapReduceDriver.withOutput(new Text("Bhutan\n\t female tertiary school enrollment for 2013 (% gross): "), new DoubleWritable(9.23651));
 		
 		//run() can return a list of key,value pairs for manual testing
 		mapReduceDriver.runTest();

@@ -21,11 +21,11 @@ public class GPIIncreaseInFiveYearsTest {
 	//with mapper generics
 	private MapDriver<LongWritable, Text, Text, DoubleArrayWritable> mapDriver;
 	//output of mapper and output of mapper
-	private ReduceDriver<Text, DoubleArrayWritable, Text, Text> reduceDriver;
+	private ReduceDriver<Text, DoubleArrayWritable, Text, DoubleWritable> reduceDriver;
 	//mrunit mapreduce
 	//input of mapper, output of mapper which happens to be input of reducer
 	//		and then out put of the reducer
-	private MapReduceDriver<LongWritable, Text, Text, DoubleArrayWritable, Text, Text> mapReduceDriver;
+	private MapReduceDriver<LongWritable, Text, Text, DoubleArrayWritable, Text, DoubleWritable> mapReduceDriver;
 
 	@Before
 	public void setUp() {
@@ -53,7 +53,7 @@ public class GPIIncreaseInFiveYearsTest {
 		DoubleWritable y2 = new DoubleWritable(0.44725);
 		DoubleWritable[] dw = {y1, y2};
 		//stats[0] + ", " + stats[2] + ", from "+furthestYear+" to "+latestYear+": "
-		mapDriver.withOutput(new Text("Guinea, School enrollment, tertiary (gross), gender parity index (GPI), from 2010 to 2014: "), new DoubleArrayWritable(dw));
+		mapDriver.withOutput(new Text("Guinea, tertiary school enrollment\nGPI increase from 2010 to 2014: "), new DoubleArrayWritable(dw));
 		//run the test
 		mapDriver.runTest();
 	}
@@ -68,10 +68,10 @@ public class GPIIncreaseInFiveYearsTest {
 		values.add(new DoubleArrayWritable(dw));
 
 		//mock input (in place of Context context
-		reduceDriver.withInput(new Text("Guinea, School enrollment, tertiary (gross), gender parity index (GPI), from 2010 to 2014: "), values);
+		reduceDriver.withInput(new Text("Guinea, tertiary school enrollment\nGPI increase from 2010 to 2014: "), values);
 		//expected output
 		double dif = y2.get()-y1.get();
-		reduceDriver.withOutput(new Text("Guinea, School enrollment, tertiary (gross), gender parity index (GPI), from 2010 to 2014: "), new Text("The GPI increased by "+dif+" from originally "+y1.get()));
+		reduceDriver.withOutput(new Text("Guinea, tertiary school enrollment\nGPI increase from 2010 to 2014: "), new DoubleWritable((double)Math.round((dif) * 100000d) / 100000d));
 
 		reduceDriver.runTest();
 	}
@@ -85,7 +85,7 @@ public class GPIIncreaseInFiveYearsTest {
 		DoubleWritable y1 = new DoubleWritable(0.33047);
 		DoubleWritable y2 = new DoubleWritable(0.44725);
 		double dif = y2.get()-y1.get();
-		mapReduceDriver.withOutput(new Text("Guinea, School enrollment, tertiary (gross), gender parity index (GPI), from 2010 to 2014: "), new Text("The GPI increased by "+dif+" from originally "+y1.get()));
+		mapReduceDriver.withOutput(new Text("Guinea, tertiary school enrollment\nGPI increase from 2010 to 2014: "), new DoubleWritable((double)Math.round((dif) * 100000d) / 100000d));
 
 		//run() can return a list of key,value pairs for manual testing
 		mapReduceDriver.runTest();

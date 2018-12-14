@@ -36,7 +36,7 @@ public class GlobalMaleEmploymentSince2000Mapper extends Mapper<LongWritable, Te
 		stats[0] = stats[0].replace("\"", "");
 		stats[stats.length-1] = stats[stats.length-1].replace("\"", "");
 		stats[stats.length-1] = stats[stats.length-1].replace(",", "");
-		if(stats[2].equals("Labor force participation rate, male (% of male population ages 15+) (modeled ILO estimate)")) {
+		if(stats[2].equals("Employment to population ratio, 15+, male (%) (modeled ILO estimate)")) {
 
 			//set up an array of Doubles holding the data for 2000 and the last year of available data
 			double[] dataDouble = {-1, -1};
@@ -66,7 +66,7 @@ public class GlobalMaleEmploymentSince2000Mapper extends Mapper<LongWritable, Te
 				DoubleWritable[] dataDoubleWriter = new DoubleWritable[2];
 				dataDoubleWriter[0] = new DoubleWritable(dataDouble[0]);
 				dataDoubleWriter[1] = new DoubleWritable(dataDouble[1]);
-				context.write(new Text(stats[0] + ", " + stats[2] + ", 2000 compared to "+latestYear+": "), new DoubleArrayWritable(dataDoubleWriter));
+				context.write(new Text(stats[0] + ", " + stats[2] + ", change in the % of males employed,\n\t2000 compared to "+latestYear+": "), new DoubleArrayWritable(dataDoubleWriter));
 			}
 			//...else, just don't output it to the reducer
 		}
