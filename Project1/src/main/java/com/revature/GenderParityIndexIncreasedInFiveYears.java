@@ -29,12 +29,6 @@ import com.revature.reduce.GPIDifferenceReducer;
 public class GenderParityIndexIncreasedInFiveYears extends Configured implements Tool {
 	@Override
 	public int run(String[] args) throws Exception {
-		//just copy all code from WordCount main()
-
-		if(args.length != 2) {
-			System.err.println("Usage: GenderParityIndexIncreasedInFiveYears <input dir> <output dir>");
-			return -1;
-		}
 
 		Job job = new Job();
 		job.setJarByClass(PercentChangeInFemEmpFrom2000.class);

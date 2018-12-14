@@ -23,12 +23,6 @@ import com.revature.reduce.LessThan30Reducer;
 public class FemaleGradLessThan30 extends Configured implements Tool {
 	@Override
 	public int run(String[] args) throws Exception {
-		//just copy all code from WordCount main()
-
-		if(args.length != 2) {
-			System.err.println("Usage: FemaleGradLessThan30 <input dir> <output dir>");
-			return -1;
-		}
 
 		Job job = new Job();
 		job.setJarByClass(FemaleGradLessThan30.class);

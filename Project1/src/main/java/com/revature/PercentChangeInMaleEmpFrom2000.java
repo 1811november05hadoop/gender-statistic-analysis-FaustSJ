@@ -23,13 +23,6 @@ import com.revature.reduce.DifferenceReducer;
 public class PercentChangeInMaleEmpFrom2000 extends Configured implements Tool {
 	@Override
 	public int run(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-		//just copy all code from WordCount main()
-
-		if(args.length != 2) {
-			System.err.println("Usage: PercentChangeInMaleEmpFrom2000 <input dir> <output dir>");
-			return -1;
-		}
 
 		Job job = new Job();
 		job.setJarByClass(PercentChangeInMaleEmpFrom2000.class);

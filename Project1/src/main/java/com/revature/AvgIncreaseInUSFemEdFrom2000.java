@@ -27,11 +27,6 @@ public class AvgIncreaseInUSFemEdFrom2000 extends Configured implements Tool {
 	@Override
 	public int run(String[] args) throws Exception {
 
-		if(args.length != 2) {
-			System.err.println("Usage: AvgIncreaseInFemEdFrom2000 <input dir> <output dir>");
-			return -1;
-		}
-
 		Job job = new Job();
 		job.setJarByClass(AvgIncreaseInUSFemEdFrom2000.class);
 
